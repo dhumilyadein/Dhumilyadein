@@ -26,7 +26,7 @@ public class InvalidLogin extends AppCompatActivity {
 //            @Override
 //            public void onClick(View v) {
 //
-//                Intent intent = new Intent(context, LoginScreen.class);
+//                Intent intent = new Intent(context, content_login_screen.class);
 //                startActivity(intent);
 //
 //            }

@@ -70,6 +70,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp" />
 
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="34dp"
+        android:textSize="12sp"
+        android:text="Signup"
+        android:id="@+id/singupBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="380dp"
+        />
+
 
 
 </RelativeLayout>
