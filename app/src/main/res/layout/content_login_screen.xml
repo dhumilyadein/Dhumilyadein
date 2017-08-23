@@ -72,7 +72,7 @@
 
     <Button
         android:layout_width="300dp"
-        android:layout_height="34dp"
+        android:layout_height="40dp"
         android:textSize="12sp"
         android:text="Signup"
         android:id="@+id/singupBtn"

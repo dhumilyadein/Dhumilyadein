@@ -39,13 +39,14 @@ public class FirstPageGreetings extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.fistPageGreetingsImg);
 
-        Log.d(LOGGER, "before run");
+        //Log.d(LOGGER, "before run");
         imageView.postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                Log.d(LOGGER, "in run");
-                Intent intent = new Intent(context, AartiMenu.class);
+                //Log.d(LOGGER, "in run");
+                //Intent intent = new Intent(context, AartiMenu.class);
+                Intent intent = new Intent(context, AppMenu.class);
                 startActivity(intent);
 
                 finish();

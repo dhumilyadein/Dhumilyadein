@@ -25,7 +25,7 @@ public class CommonHelper {
         return result;
     }
 
-    public static boolean isNotNullOrEmpty(String str) {
+    public static boolean isNotNullAndNotEmpty(String str) {
 
         boolean result = false;
         if (null != str && str.length() != 0) {

@@ -19,13 +19,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.example.user.database.SharedPreferenceSample;
+import com.example.user.database.dbhelper.UsersDBHelper;
+import com.example.user.dto.Users;
+import com.example.user.sharedpreference.SharedPreferenceSample;
 import com.example.user.helper.CommonHelper;
 
 public class LoginScreen extends AppCompatActivity {
 
-    private final String LOGGER = "kapilLog";
+    private final String DEBUG = "kapilDebug";
+    private final String TRACE = "kapilTrace";
 
     final Context context = this;
 
@@ -35,7 +39,7 @@ public class LoginScreen extends AppCompatActivity {
     private EditText usernameTxt;
     private EditText passwordTxt;
     private RelativeLayout loginScreenLayout;
-    private SharedPreferenceSample sps = null;
+    //private SharedPreferenceSample sps = null;
 
     private static final String USERNAME = "Username";
     private static final String PASSWORD = "Password";
@@ -54,7 +58,7 @@ public class LoginScreen extends AppCompatActivity {
         showPasswordBtn = (Button) findViewById(R.id.showPasswordBtn);
         passwordTxt = (EditText) findViewById(R.id.passwordTxt);
 
-        sps = new SharedPreferenceSample(context, "DYUserDetails");
+        //sps = new SharedPreferenceSample(context, "DYUserDetails");
 
         //show password
         addActionListenerOnShowPasswordBtn();
@@ -97,27 +101,24 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                Log.d(LOGGER, "setOnTouchListener start");
+                //Log.d(DEBUG, "setOnTouchListener start");
                 Editable password = passwordTxt.getText();
-                Log.d(LOGGER, password.toString());
 
                 //passwordTxt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
                 switch (event.getAction()) {
 
                     case MotionEvent.ACTION_DOWN:
-                        Log.d(LOGGER, "Down");
                         passwordTxt.setTransformationMethod(null);
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        Log.d(LOGGER, "Up");
                         passwordTxt.setTransformationMethod(PasswordTransformationMethod.getInstance());
                         break;
 
                 }
 
-                Log.d(LOGGER, "setOnTouchListener end");
+                //Log.d(DEBUG, "setOnTouchListener end");
                 return false;
             }
         });
@@ -134,17 +135,23 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d(LOGGER, "addActionListenerOnLoginBtn start");
+                //Log.d(DEBUG, "addActionListenerOnLoginBtn start");
                 String usernameInputStr = usernameTxt.getText().toString();
                 String passwordInputStr = passwordTxt.getText().toString();
 
-                String passwordStoredStr = sps.getData(usernameInputStr);
+                //String passwordStoredStr = sps.getData(usernameInputStr);
+
+                UsersDBHelper usersDBHelper = new UsersDBHelper(context);
+                Users user = usersDBHelper.readUser(usernameInputStr);
+                if (null != user) {
+                    Log.d(TRACE, "User from DB " + user.getId() + " " + user.getUsername() + " " + user.getPassword() + " " + user.getEmail());
+                }
 
                 boolean doVerification = true;
 
-                if (CommonHelper.isNotNullOrEmpty(usernameInputStr) && CommonHelper.isNotNullOrEmpty(passwordInputStr)) {
+                if (CommonHelper.isNotNullAndNotEmpty(usernameInputStr) && CommonHelper.isNotNullAndNotEmpty(passwordInputStr)) {
 
-                    if (passwordInputStr.equals(passwordStoredStr)) {
+                    if (null != user && passwordInputStr.equals(user.getPassword())) {
 
                         Intent intent = new Intent(context, FirstPageGreetings.class);
                         startActivity(intent);
@@ -160,19 +167,18 @@ public class LoginScreen extends AppCompatActivity {
 
                         loginScreenLayout.setFocusable(false);
 
-                        showPopup(LoginScreen.this);
-
+                        showPopup(LoginScreen.this, "Invalid Username or Password", "Try again");
                     }
                 } else {
-
+                    showPopup(LoginScreen.this, "Mandatory parameters missing!", "Provide all details");
                 }
 
-                Log.d(LOGGER, "addActionListenerOnLoginBtn end");
+                //Log.d(DEBUG, "addActionListenerOnLoginBtn end");
             }
         });
     }
 
-    private void showPopup(final Activity context) {
+    private void showPopup(final Activity context, String textViewTxt, String btnTxt) {
 
         int popupWidth = 200;
         int popupHeight = 150;
@@ -194,8 +200,11 @@ public class LoginScreen extends AppCompatActivity {
 
         popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
+        TextView t = (TextView) layout.findViewById(R.id.invalidLoginLbl);
+        t.setText(textViewTxt);
         // Getting a reference to Close button, and close the popup when clicked.
         Button close = (Button) layout.findViewById(R.id.tryAgainBtn);
+        close.setText(btnTxt);
         close.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -219,7 +228,8 @@ public class LoginScreen extends AppCompatActivity {
                 Intent intent = new Intent(context, Signup.class);
                 startActivity(intent);
 
-                // Finishing activiy on redirection as on back from sign up we will create the activity again, and we dont want this activity instance to be active.
+                // Finishing activiy on redirection as on back from sign up we will create
+                // the activity again, and we dont want this activity instance to be active.
                 finish();
             }
         });
@@ -230,8 +240,6 @@ public class LoginScreen extends AppCompatActivity {
         passwordTxt.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-                Log.d(LOGGER, "Printing on touch");
 
                 // hiding password on activity load (mainly in back button)
                 passwordTxt.setTransformationMethod(PasswordTransformationMethod.getInstance());

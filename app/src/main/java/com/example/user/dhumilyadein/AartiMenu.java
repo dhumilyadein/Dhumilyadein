@@ -46,11 +46,11 @@ public class AartiMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d(LOGGER, "addActionListenerOnBtn ganeshjiaarti start");
+                //Log.d(LOGGER, "addActionListenerOnBtn ganeshjiaarti start");
                 Intent intent = new Intent(context, GaneshAarti.class);
                     startActivity(intent);
 
-                Log.d(LOGGER, "addActionListenerOnBtn ganeshjiaarti end");
+                //Log.d(LOGGER, "addActionListenerOnBtn ganeshjiaarti end");
             }
         });
 
@@ -58,11 +58,11 @@ public class AartiMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti start");
+                //Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti start");
                 Intent intent = new Intent(context, AmbejiAarti.class);
                 startActivity(intent);
 
-                Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti end");
+                //Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti end");
             }
         });
 
@@ -70,11 +70,11 @@ public class AartiMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d(LOGGER, "addActionListenerOnBtn GaneshjiAartiTxt start");
+                //Log.d(LOGGER, "addActionListenerOnBtn GaneshjiAartiTxt start");
                 Intent intent = new Intent(context, GaneshjiAartiTxt.class);
                 startActivity(intent);
 
-                Log.d(LOGGER, "addActionListenerOnBtn GaneshjiAartiTxt end");
+                //Log.d(LOGGER, "addActionListenerOnBtn GaneshjiAartiTxt end");
             }
         });
 
@@ -82,11 +82,11 @@ public class AartiMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti start");
+                //Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti start");
                 Intent intent = new Intent(context, JagdishHareAartiTxt.class);
                 startActivity(intent);
 
-                Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti end");
+                //Log.d(LOGGER, "addActionListenerOnBtn ambejiaarti end");
             }
         });
     }
